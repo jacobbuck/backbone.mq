@@ -4,6 +4,7 @@ Backbone.MQ
 Backbone extension to detect and listen to media queries.
 
 
+
 Documentation
 -------------
 
@@ -32,7 +33,7 @@ mq.add({
 });
 ```
 
-Or add your media queries when you initialize your MQ object.
+Or add your media queries when you initialise your MQ object.
 
 ```js
 var mq = new Backbone.MQ({
@@ -46,6 +47,7 @@ You can also remove media queries.
 ```js
 mq.remove('mobile');
 ```
+
 
 ### Detection
 
@@ -67,9 +69,12 @@ mq.matches('desktop', function () {
 });
 ```
 
+
 ### Events
 
-You can also listen for when a media query matches or unmatches. The MQ object extends [Backbone.Events](http://backbonejs.org/#Events), so enjoy making the most of it.
+You can also listen for when a media query becomes matched or unmatched. The MQ object extends [Backbone.Events](http://backbonejs.org/#Events), so enjoy making the most of it.
+
+Events which are namespaced by `:match` or `:unmatch` are only triggered if the media query is matched or unmatched respectively.
 
 ```js
 mq.on('desktop', function (media) {
@@ -84,14 +89,12 @@ mq.once('mobile:match', function () {
 	// I'm on a phone, I'm on a phone; Everybody look at me, 'cause I'm browsing on a phone
 });
 
-someModal.listenTo(mq, 'desktop:unmatch', function () {
+backboneThing.listenTo(mq, 'desktop:unmatch', function () {
 	// Wait, we're not on a desktop any more? How did that happen?
 })
 
 mq.off('desktop');
 ```
-
-An event is fired when a media query is matched or unmatched, and events which are namespaced by `:match` or `:unmatch` are only triggered if the media query is matched or unmatched respectively.
 
 
 ### Chainable
@@ -112,16 +115,19 @@ mq
 Except `mq.matches()` with a single parameter, which returns a boolean :wink:
 
 
+
 Compatibility
 -------------
 
 If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `window.matchMedia` to work, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
 
 
+
 AMD and CommonJS
 ----------------
 
 Yes
+
 
 
 License
