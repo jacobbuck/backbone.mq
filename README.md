@@ -3,8 +3,6 @@ Backbone.MQ
 
 Backbone extension to detect and listen to media queries.
 
-
-
 Documentation
 -------------
 
@@ -48,7 +46,6 @@ You can also remove media queries.
 mq.remove('mobile');
 ```
 
-
 ### Detection
 
 At any point you can see if your media query matches.
@@ -68,7 +65,6 @@ mq.matches('desktop', function () {
 	// Also do some desktopy things
 });
 ```
-
 
 ### Events
 
@@ -96,7 +92,6 @@ backboneThing.listenTo(mq, 'desktop:unmatch', function () {
 mq.off('desktop');
 ```
 
-
 ### Chainable
 
 Most methods on MQ are chainable.
@@ -114,26 +109,17 @@ mq
 
 Except `mq.matches()` with a single parameter, which returns a boolean :wink:
 
-
-
 Compatibility
 -------------
 
 If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `window.matchMedia` to work, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
-
-
 
 AMD and CommonJS
 ----------------
 
 Yes
 
-
-
 License
 -------
 
 MIT - see [LICENSE.md](LICENSE.md)
-
-
-
