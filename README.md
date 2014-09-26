@@ -111,7 +111,7 @@ Except `mq.matches()` with a single parameter, which returns a boolean :wink:
 
 ### Default
 
-When `matchMedia` or media queries isn't supported, MQ will fallback to a default breakpoint. By default the first added media query will be used, but you're welcome to override it:
+When `matchMedia` or media queries isn't supported, MQ will fallback to a default media query. By default the first added media query will be used, but you're welcome to override it:
 
 ```js
 mq.default = 'mobile'; // mobile first yo!
