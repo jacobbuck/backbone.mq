@@ -53,9 +53,9 @@
 				media.m.addListener(media.l);
 			}
 
-			// Use this as the default media query if one hasn't been set
-			if (!this.default) {
-				this.default = name;
+			// Use this as the fallback media query if one hasn't been set
+			if (!this.fallback) {
+				this.fallback = name;
 			}
 
 			return this;
@@ -78,7 +78,7 @@
 		// Return whether the selected media query currently matches
 		matches: function (name, callback) {
 			var media = this._media[name];
-			var matches = (media || undefined) && (supports ? media.m.matches : name === this.default);
+			var matches = (media || undefined) && (supports ? media.m.matches : name === this.fallback);
 			if (_.isFunction(callback)) {
 				if (matches) {
 					callback({matches: matches, media: media.s});

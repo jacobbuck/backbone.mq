@@ -109,12 +109,12 @@ mq
 
 Except `mq.matches()` with a single parameter, which returns a boolean :wink:
 
-### Default
+### Fallback
 
-When `matchMedia` or media queries isn't supported, MQ will fallback to a default media query. By default the first added media query will be used, but you're welcome to override it:
+When `matchMedia` or media queries isn't supported, MQ will fall back to a single media query. By default the first added media query will be used, but you're welcome to override it:
 
 ```js
-mq.default = 'mobile'; // mobile first yo!
+mq.fallback = 'mobile'; // Mobile first yo!
 ```
 
 Compatibility
