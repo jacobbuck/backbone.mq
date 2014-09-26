@@ -9,6 +9,11 @@
 }(this, function (Backbone, _) {
 	'use strict';
 
+	var matchMedia = window.matchMedia;
+
+	// Detect matchMedia and CSS3 Media Query support
+	var supports = matchMedia && matchMedia('only all').matches;
+
 	function MQ () {
 		// Registered media queries
 		this._media = {};
@@ -21,7 +26,7 @@
 	_.extend(MQ.prototype, Backbone.Events, {
 		// Add media query
 		add: function (name, mediaQueryString) {
-			// When the first argument to be an object, loop through the properties.
+			// When the first argument to be an object, loop through the properties
 			if (_.isObject(name)) {
 				for (var i in name) {
 					this.add(i, name[i]);
@@ -34,14 +39,24 @@
 				throw new Error('"' + name + '" is already registered');
 			}
 
-			// Registerd media object
-			var media = this._media[name] = {m: window.matchMedia(mediaQueryString)};
+			// Registered media object
+			var media = this._media[name] = {s: mediaQueryString};
 
-			// Add event handler
-			media.m.addListener(media.l = _.bind(function (m) {
-				// Trigger name and name:match|unmatch
-				this.trigger(name + ' ' + name + (m.matches ? ':match' : ':unmatch'), m);
-			}, this, media.m));
+			if (supports) {
+				media.m = matchMedia(mediaQueryString);
+				media.l = _.bind(function () {
+					var matches = media.m.matches;
+					// Trigger name and name:match|unmatch
+					this.trigger(name + ' ' + name + (matches ? ':match' : ':unmatch'),
+						{matches: matches, media: media.s});
+				}, this);
+				media.m.addListener(media.l);
+			}
+
+			// Use this as the default media query if one hasn't been set
+			if (!this.default) {
+				this.default = name;
+			}
 
 			return this;
 		},
@@ -50,9 +65,11 @@
 		remove: function (name) {
 			var media = this._media[name];
 			if (media) {
-				// Remove event handler
-				media.m.removeListener(media.l);
-				// Remove from registered media queries.
+				if (supports) {
+					// Remove event handler
+					media.m.removeListener(media.l);
+				}
+				// Remove from registered media queries
 				this._media[name] = undefined;
 			}
 			return this;
@@ -61,13 +78,14 @@
 		// Return whether the selected media query currently matches
 		matches: function (name, callback) {
 			var media = this._media[name];
+			var matches = (media || undefined) && (supports ? media.m.matches : name === this.default);
 			if (_.isFunction(callback)) {
-				if (media && media.m.matches) {
-					callback(media.m);
+				if (matches) {
+					callback({matches: matches, media: media.s});
 				}
 				return this;
 			}
-			return (media || undefined) && media.m.matches;
+			return matches;
 		}
 	});
 

@@ -1,7 +1,7 @@
 Backbone.MQ
 ===========
 
-Backbone extension to detect and listen to media queries.
+Backbone plugin to detect and listen to media queries.
 
 Documentation
 -------------
@@ -109,10 +109,18 @@ mq
 
 Except `mq.matches()` with a single parameter, which returns a boolean :wink:
 
+### Default
+
+When `matchMedia` or media queries isn't supported, MQ will fallback to a default breakpoint. By default the first added media query will be used, but you're welcome to override it:
+
+```js
+mq.default = 'mobile'; // mobile first yo!
+```
+
 Compatibility
 -------------
 
-If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `window.matchMedia` to work, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
+If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `matchMedia` to work, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
 
 AMD and CommonJS
 ----------------
