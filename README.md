@@ -120,7 +120,7 @@ mq.default = 'mobile'; // mobile first yo!
 Compatibility
 -------------
 
-If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `matchMedia` to work, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
+If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `matchMedia` to work properly, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
 
 AMD and CommonJS
 ----------------
