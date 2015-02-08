@@ -43,7 +43,9 @@
 			var media = this._media[name] = {s: mediaQueryString};
 
 			if (supports) {
+				// MediaQueryList
 				media.m = matchMedia(mediaQueryString);
+				// Event listener
 				media.l = _.bind(function () {
 					var matches = media.m.matches;
 					// Trigger name and name:match|unmatch
@@ -66,7 +68,7 @@
 			var media = this._media[name];
 			if (media) {
 				if (supports) {
-					// Remove event handler
+					// Remove event listener
 					media.m.removeListener(media.l);
 				}
 				// Remove from registered media queries
