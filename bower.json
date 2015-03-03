@@ -1,0 +1,26 @@
+{
+  "name": "backbone.mq",
+  "main": "backbone.mq.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jacobbuck/backbone.mq",
+  "authors": [
+    "Jacob Buck <buck.jacob@gmail.com>"
+  ],
+  "description": "Backbone plugin to detect and listen to media queries.",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "backbone",
+    "matchmedia"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
