@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Backbone plugin to detect and listen to media queries.",
   "main": "backbone.mq.js",
-  "peerDependencies": {
-    "backbone": "1.x",
-    "underscore": "1.x"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jacobbuck/backbone.mq.git"
