@@ -21,9 +21,11 @@ _.extend(MQ.prototype, Backbone.Events, {
   // Add media query
   add: function(name, mediaQueryString) {
     // When the first argument to be an object, loop through the properties
-    if (_.isObject(name)) {
+    if (typeof name === 'object') {
       for (var i in name) {
-        this.add(i, name[i]);
+        if (name.hasOwnProperty(i)) {
+          this.add(i, name[i]);
+        }
       }
       return this;
     }
@@ -40,12 +42,12 @@ _.extend(MQ.prototype, Backbone.Events, {
       // MediaQueryList
       media.m = matchMedia(mediaQueryString);
       // Event listener
-      media.l = _.bind(function() {
+      media.l = function() {
         var matches = media.m.matches;
         // Trigger name and name:match|unmatch
         this.trigger(name + ' ' + name + (matches ? ':match' : ':unmatch'),
           {matches: matches, media: media.s});
-      }, this);
+      }.bind(this);
       media.m.addListener(media.l);
     }
 
@@ -75,7 +77,7 @@ _.extend(MQ.prototype, Backbone.Events, {
   matches: function(name, callback) {
     var media = this._media[name];
     var matches = (media || undefined) && (supports ? media.m.matches : name === this.fallback);
-    if (_.isFunction(callback)) {
+    if (typeof callback === 'function') {
       if (matches) {
         callback({matches: matches, media: media.s});
       }
