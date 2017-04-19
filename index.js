@@ -1,95 +1,88 @@
-(function (context, factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(['backbone', 'underscore'], factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory(require('backbone'), require('lodash'));
-	} else {
-		factory(context.Backbone, context._);
-	}
-}(this, function (Backbone, _) {
-	'use strict';
+'use strict';
 
-	var matchMedia = window.matchMedia;
+var Backbone = require('backbone');
+var _ = require('lodash');
 
-	// Detect matchMedia and CSS3 Media Query support
-	var supports = matchMedia && matchMedia('only all').matches;
+var matchMedia = window.matchMedia;
 
-	function MQ () {
-		// Registered media queries
-		this._media = {};
-		// Run add if arguments supplied on initialize
-		if (arguments.length > 0) {
-			this.add.apply(this, arguments);
-		}
-	}
+// Detect matchMedia and CSS3 Media Query support
+var supports = matchMedia && matchMedia('only all').matches;
 
-	_.extend(MQ.prototype, Backbone.Events, {
-		// Add media query
-		add: function (name, mediaQueryString) {
-			// When the first argument to be an object, loop through the properties
-			if (_.isObject(name)) {
-				for (var i in name) {
-					this.add(i, name[i]);
-				}
-				return this;
-			}
+function MQ() {
+  // Registered media queries
+  this._media = {};
+  // Run add if arguments supplied on initialize
+  if (arguments.length > 0) {
+    this.add.apply(this, arguments);
+  }
+}
 
-			// Throw an error if the media query already exists.
-			if (this._media[name]) {
-				throw new Error('"' + name + '" is already registered');
-			}
+_.extend(MQ.prototype, Backbone.Events, {
+  // Add media query
+  add: function(name, mediaQueryString) {
+    // When the first argument to be an object, loop through the properties
+    if (_.isObject(name)) {
+      for (var i in name) {
+        this.add(i, name[i]);
+      }
+      return this;
+    }
 
-			// Registered media object
-			var media = this._media[name] = {s: mediaQueryString};
+    // Throw an error if the media query already exists.
+    if (this._media[name]) {
+      throw new Error('"' + name + '" is already registered');
+    }
 
-			if (supports) {
-				// MediaQueryList
-				media.m = matchMedia(mediaQueryString);
-				// Event listener
-				media.l = _.bind(function () {
-					var matches = media.m.matches;
-					// Trigger name and name:match|unmatch
-					this.trigger(name + ' ' + name + (matches ? ':match' : ':unmatch'),
-						{matches: matches, media: media.s});
-				}, this);
-				media.m.addListener(media.l);
-			}
+    // Registered media object
+    var media = this._media[name] = {s: mediaQueryString};
 
-			// Use this as the fallback media query if one hasn't been set
-			if (!this.fallback) {
-				this.fallback = name;
-			}
+    if (supports) {
+      // MediaQueryList
+      media.m = matchMedia(mediaQueryString);
+      // Event listener
+      media.l = _.bind(function() {
+        var matches = media.m.matches;
+        // Trigger name and name:match|unmatch
+        this.trigger(name + ' ' + name + (matches ? ':match' : ':unmatch'),
+          {matches: matches, media: media.s});
+      }, this);
+      media.m.addListener(media.l);
+    }
 
-			return this;
-		},
+    // Use this as the fallback media query if one hasn't been set
+    if (!this.fallback) {
+      this.fallback = name;
+    }
 
-		// Remove media query
-		remove: function (name) {
-			var media = this._media[name];
-			if (media) {
-				if (supports) {
-					// Remove event listener
-					media.m.removeListener(media.l);
-				}
-				// Remove from registered media queries
-				this._media[name] = undefined;
-			}
-			return this;
-		},
+    return this;
+  },
 
-		// Return whether the selected media query currently matches
-		matches: function (name, callback) {
-			var media = this._media[name];
-			var matches = (media || undefined) && (supports ? media.m.matches : name === this.fallback);
-			if (_.isFunction(callback)) {
-				if (matches) {
-					callback({matches: matches, media: media.s});
-				}
-				return this;
-			}
-			return matches;
-		}
-	});
+  // Remove media query
+  remove: function(name) {
+    var media = this._media[name];
+    if (media) {
+      if (supports) {
+        // Remove event listener
+        media.m.removeListener(media.l);
+      }
+      // Remove from registered media queries
+      this._media[name] = undefined;
+    }
+    return this;
+  },
 
-	return (Backbone.MQ = MQ);
-}));
+  // Return whether the selected media query currently matches
+  matches: function(name, callback) {
+    var media = this._media[name];
+    var matches = (media || undefined) && (supports ? media.m.matches : name === this.fallback);
+    if (_.isFunction(callback)) {
+      if (matches) {
+        callback({matches: matches, media: media.s});
+      }
+      return this;
+    }
+    return matches;
+  }
+});
+
+module.exports = MQ;
