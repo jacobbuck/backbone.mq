@@ -12,5 +12,11 @@
   "bugs": {
     "url": "https://github.com/jacobbuck/backbone.mq/issues"
   },
-  "homepage": "https://github.com/jacobbuck/backbone.mq"
+  "homepage": "https://github.com/jacobbuck/backbone.mq",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "peerDependencies": {
+    "backbone": "^1.x"
+  }
 }
