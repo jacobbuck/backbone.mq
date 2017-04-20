@@ -1,7 +1,7 @@
 'use strict';
 
 var Backbone = require('backbone');
-var _ = require('lodash');
+var assign = require('lodash/assign');
 
 var matchMedia = window.matchMedia;
 
@@ -17,7 +17,7 @@ function MQ() {
   }
 }
 
-_.extend(MQ.prototype, Backbone.Events, {
+assign(MQ.prototype, Backbone.Events, {
   // Add media query
   add: function(name, mediaQueryString) {
     // When the first argument to be an object, loop through the properties
