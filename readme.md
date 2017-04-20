@@ -1,25 +1,23 @@
-Backbone.MQ
-===========
+# backbone.mq
 
 Backbone plugin to detect and listen to media queries.
 
-Documentation
--------------
-
-Who needs boring ol' API documentation when you get examples :stuck_out_tongue_closed_eyes:
+## Usage
 
 ### Setup
 
 Create a new MQ object to get started.
 
 ```js
-var mq = new Backbone.MQ();
+import MQ from 'backbone.mq'
+
+const mq = new MQ()
 ```
 
 Then add your media queries you would like to use.
 
 ```js
-mq.add('desktop', 'only screen and (min-width:60em)');
+mq.add('desktop', 'only screen and (min-width:60em)')
 ```
 
 Or add multiple media queries.
@@ -28,22 +26,22 @@ Or add multiple media queries.
 mq.add({
 	'desktop': 'screen and (min-width:60em)',
 	'mobile': 'handheld or screen and (max-width:59.99em)'
-});
+})
 ```
 
-Or add your media queries when you initialise your MQ object.
+Or add your media queries when you initialize your MQ object.
 
 ```js
-var mq = new Backbone.MQ({
+const mq = new MQ({
 	'desktop': 'screen and (min-width:60em)',
 	'mobile': 'handheld or screen and (max-width:59.99em)'
-});
+})
 ```
 
 You can also remove media queries.
 
 ```js
-mq.remove('mobile');
+mq.remove('mobile')
 ```
 
 ### Detection
@@ -51,19 +49,19 @@ mq.remove('mobile');
 At any point you can see if your media query matches.
 
 ```js
-var isDesktop = mq.matches('desktop'); // -> boolean
+const isDesktop = mq.matches('desktop') // -> boolean
 
 if (isDesktop) {
 	// Do some desktopy things
 }
 ```
 
-Alternativly this works too.
+Alternatively this works too.
 
 ```js
-mq.matches('desktop', function () {
+mq.matches('desktop', function() {
 	// Also do some desktopy things
-});
+})
 ```
 
 ### Events
@@ -79,17 +77,17 @@ mq.on('desktop', function (media) {
 	} else {
 		// Or not
 	}
-});
+})
 
-mq.once('mobile:match', function () {
-	// I'm on a phone, I'm on a phone; Everybody look at me, 'cause I'm browsing on a phone
-});
+mq.once('mobile:match', function() {
+	// I'm on a phone!
+})
 
-backboneThing.listenTo(mq, 'desktop:unmatch', function () {
+backboneThing.listenTo(mq, 'desktop:unmatch', function() {
 	// Wait, we're not on a desktop any more? How did that happen?
 })
 
-mq.off('desktop');
+mq.off('desktop')
 ```
 
 ### Chainable
@@ -102,9 +100,9 @@ mq
 	'desktop': 'screen and (min-width:60em)',
 	'mobile': 'handheld or screen and (max-width:59.99em)'
 })
-.matches('desktop', function () { /* ... */ })
-.once('mobile', function () { /* ... */ })
-.remove('desktop');
+.matches('desktop', function() { /* ... */ })
+.once('mobile', function() { /* ... */ })
+.remove('desktop')
 ```
 
 Except `mq.matches()` with a single parameter, which returns a boolean :wink:
@@ -117,17 +115,10 @@ When `matchMedia` or media queries isn't supported, MQ will fall back to a singl
 mq.fallback = 'mobile'; // Mobile first yo!
 ```
 
-Compatibility
--------------
+## Compatibility
 
-If Backbone and Underscore works in your browser, then this should work too. Backbone.MQ does require `matchMedia` to work properly, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
+Backbone.MQ requires `matchMedia` to work properly, so you might need a [polyfill](https://github.com/paulirish/matchMedia.js/) for older browsers.
 
-AMD and CommonJS
-----------------
+## License
 
-Yes
-
-License
--------
-
-MIT - see [LICENSE.md](LICENSE.md)
+MIT - see [license](license)
